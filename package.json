@@ -1,0 +1,30 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Yandex-Praktikum. Diploma. Backend.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NurgaleevaDi/movies-explorer-api.git"
+  },
+  "keywords": [],
+  "author": "Nurgaleeva Diana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NurgaleevaDi/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/NurgaleevaDi/movies-explorer-api#readme",
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-plugin-react": "^7.30.1"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
