@@ -10,10 +10,15 @@ const { generateToken } = require('../helpers/jwt');
 const { MONGO_DUPLICATE_ERROR } = require('../helpers/errors');
 const SALT_ROUNDS = 10;
 
-module.exports.getUser = (req, res) => {
+module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.send(user))
-    .catch(err => res.status(500).send({message: `Ошибка ${err}`}));
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Пользователь не найден');
+      }
+      res.send(user);
+    })
+    .catch(next);
 }
 
 // getUsers для тестирования, надо убрать в финале
@@ -85,7 +90,7 @@ module.exports.login = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
-    { name: req.body.name, about: req.body.about },
+    { name: req.body.name }, // add somthing else?
     { new: true, runValidators: true },
   )
     .then((user) => {

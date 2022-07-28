@@ -42,7 +42,6 @@ app.post(
 
 app.use(errors()); // обработчик ошибок celebrate
 
-
 // централизованный обработчик ошибок
 app.use('/*', auth, (req, res, next) => next(new NotFoundError('Запрашиваемая страница не существует')));
 
