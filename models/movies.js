@@ -51,17 +51,17 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
     required: [true, 'Необходим id'],
   },
-  movieId: {
-    type: mongoose.Schema.Types.ObjectId, // Проверить!
-    ref: 'user',
-    required: [true, 'Необходим id'],
-  },
+  // movieId: {
+  //   type: mongoose.Schema.Types.ObjectId, // Проверить!
+  //   ref: 'user',
+  //   required: [true, 'Необходим id'],
+  // },
   nameRU: {
-    type: Number,
+    type: String,
     required: true,
   },
   nameEN: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
