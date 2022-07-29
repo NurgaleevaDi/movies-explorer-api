@@ -10,14 +10,6 @@ const { generateToken } = require('../helpers/jwt');
 const { MONGO_DUPLICATE_ERROR } = require('../helpers/errors');
 const SALT_ROUNDS = 10;
 
-
-// getUsers для тестирования, надо убрать в финале
-module.exports.getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.send({data: users}))
-    .catch(() => res.status(404).send({message: 'Error!'}))
-};
-
 module.exports.createUser = (req, res, next) => {
   const { email, password, name } = req.body;
   if (!email || !password) {
@@ -91,7 +83,7 @@ module.exports.getUser = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
-    { name: req.body.name }, // add somthing else?
+    { name: req.body.name },
     { new: true, runValidators: true },
   )
     .then((user) => {
