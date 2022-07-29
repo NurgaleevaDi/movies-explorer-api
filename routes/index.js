@@ -8,7 +8,6 @@ const NotFoundError = require('../errors/not-found-error');
 
 router.post('/signup', validateUserBody, createUser);
 router.post('/signin', validateAuthentication, login);
-//router.use(auth);
 router.use('/users', auth, userRouter);
 router.use('/movies', auth, movieRouter);
 router.use('/*', auth, (req, res, next) => next(new NotFoundError('Запрашиваемая страница не существует')));
