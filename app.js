@@ -5,6 +5,7 @@ const bodyParser = require ('body-parser');
 const { createUser, login } = require('./controllers/users');
 const { errors, celebrate, Joi } = require('celebrate');
 const { auth } = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 
@@ -14,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+
+app.use(requestLogger);
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/movies', auth, require('./routes/movies'));
@@ -40,6 +43,8 @@ app.post(
   }),
   login,
 );
+
+app.use(errorLogger);
 
 app.use(errors()); // обработчик ошибок celebrate
 
