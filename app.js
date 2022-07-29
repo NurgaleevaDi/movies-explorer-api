@@ -1,12 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const NotFoundError = require('./errors/not-found-error');
 const bodyParser = require ('body-parser');
-const { createUser, login } = require('./controllers/users');
-const { errors, celebrate, Joi } = require('celebrate');
-const { auth } = require('./middlewares/auth');
+const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const routes = require('./routes');
 
 const { PORT = 3000 } = process.env;
 
@@ -19,38 +17,13 @@ mongoose.connect('mongodb://localhost:27017/moviesdb');
 
 app.use(requestLogger);
 
-app.use('/users', auth, require('./routes/users'));
-app.use('/movies', auth, require('./routes/movies'));
-
-app.post(
-  '/signup',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30).required(),
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
-  createUser,
-);
-
-app.post(
-  '/signin',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }),
-  login,
-);
+app.use(routes);
 
 app.use(errorLogger);
 
 app.use(errors()); // обработчик ошибок celebrate
 
 // централизованный обработчик ошибок
-app.use('/*', auth, (req, res, next) => next(new NotFoundError('Запрашиваемая страница не существует')));
 
 // eslint-disable-next-line
 app.use((err, req, res, next) => {

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+const { validateUpdateUser } = require('../helpers/validators');
 
 const {
   getUsers,
@@ -8,15 +8,7 @@ const {
 } = require('../controllers/users');
 
 router.get('', getUsers); // роут для тестирования, надо убрать
-router.get('/me', getUser); // надо ли делать валидацию celebrate?
-router.patch(
-  '/me',
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-    }),
-  }),
-  updateUser
-);
+router.get('/me', getUser); // надо ли делать валидацию
+router.patch('/me', validateUpdateUser, updateUser);
 
 module.exports = router;
