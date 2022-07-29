@@ -9,6 +9,6 @@
 ***
 
 
-**Бэкенд/backend** http://api.movies.nurgaleeva.nomoredomains.xyz/ 
+**Бэкенд/backend** https://api.movies.nurgaleeva.nomoredomains.xyz/ 
 
-**Фронтэнд/Frontend** http://movies.nurgaleeva.nomoredomains.xyz/
+**Фронтэнд/Frontend** https://movies.nurgaleeva.nomoredomains.xyz/
