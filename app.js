@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require ('body-parser');
+const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
@@ -25,14 +25,13 @@ app.use(errors()); // обработчик ошибок celebrate
 
 // централизованный обработчик ошибок
 
-// eslint-disable-next-line
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode)
-  .send({message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
+    .send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
+  next();
 });
 
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`)
-})
-
+  // console.log(`App listening on port ${PORT}`);
+});

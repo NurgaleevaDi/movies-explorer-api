@@ -3,7 +3,7 @@ const { validateUpdateUser } = require('../helpers/validators');
 
 const {
   getUser,
-  updateUser
+  updateUser,
 } = require('../controllers/users');
 
 router.get('/me', getUser);

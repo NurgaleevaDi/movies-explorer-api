@@ -11,7 +11,7 @@ const auth = (req, res, next) => {
   if (!isAutorized) {
     throwUnathorizedError();
   }
-const token = isAutorized.replace('Bearer ', '');
+  const token = isAutorized.replace('Bearer ', '');
   let payload;
   try {
     payload = checkToken(token);

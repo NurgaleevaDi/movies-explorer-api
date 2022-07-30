@@ -3,7 +3,7 @@ const { validateMovieBody, validateDeleteMovie } = require('../helpers/validator
 const {
   getMovies,
   createMovie,
-  deleteMovie
+  deleteMovie,
 } = require('../controllers/movies');
 
 router.get('', getMovies);

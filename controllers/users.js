@@ -8,6 +8,7 @@ const NotFoundError = require('../errors/not-found-error');
 
 const { generateToken } = require('../helpers/jwt');
 const { MONGO_DUPLICATE_ERROR } = require('../helpers/errors');
+
 const SALT_ROUNDS = 10;
 
 module.exports.createUser = (req, res, next) => {
@@ -38,7 +39,7 @@ module.exports.createUser = (req, res, next) => {
       }
       next(err);
     });
-}
+};
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -67,7 +68,7 @@ module.exports.login = (req, res, next) => {
       res.send({ token });
     })
     .catch(next);
-}
+};
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -78,7 +79,7 @@ module.exports.getUser = (req, res, next) => {
       res.send(user);
     })
     .catch(next);
-}
+};
 
 module.exports.updateUser = (req, res, next) => {
   User.findByIdAndUpdate(

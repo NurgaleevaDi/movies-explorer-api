@@ -29,31 +29,28 @@ module.exports.createMovie = (req, res, next) => {
     thumbnail,
     nameRU,
     nameEN,
-    owner
+    owner,
   })
     .then((movie) => res.send({ data: movie }))
     .catch((err) => {
-      console.log('err', err);
-      if(err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError(`Ошибка валидации: ${err}`));
         return;
       }
       next(err);
-    })
-}
+    });
+};
 
 module.exports.getMovies = (req, res, next) => {
-  console.log(res);
   Movie.find({})
     .then((movies) => res.send({ data: movies }))
     .catch(next);
-}
+};
 
 module.exports.deleteMovie = (req, res, next) => {
-  console.log('req.params', req.params);
   Movie.findById(req.params._id)
     .then((movie) => {
-      if(!movie) {
+      if (!movie) {
         throw new NotFoundError('Фильм не найден');
       } else if (String(movie.owner) !== String(req.user._id)) {
         throw new ForbiddenError('Нельзя удалять чужой фильм');
@@ -63,4 +60,4 @@ module.exports.deleteMovie = (req, res, next) => {
       }
     })
     .catch((err) => next(err));
-}
+};
