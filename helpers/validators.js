@@ -34,6 +34,7 @@ module.exports.validateMovieBody = celebrate({
     thumbnail: Joi.string().required().pattern(/^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 });
 
