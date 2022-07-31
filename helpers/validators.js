@@ -1,4 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
+const help = require('nodemon/lib/help');
+const validator = require('validator');
 
 module.exports.validateUserBody = celebrate({
   body: Joi.object().keys({
@@ -29,9 +31,24 @@ module.exports.validateMovieBody = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(/^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/),
-    trailerLink: Joi.string().required().pattern(/^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/),
-    thumbnail: Joi.string().required().pattern(/^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле заполнено не верно');
+    }),
+    trailerLink: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле заполнено не верно');
+    }),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле заполнено не верно');
+    }),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     movieId: Joi.number().required(),
