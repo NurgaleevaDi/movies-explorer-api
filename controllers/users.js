@@ -13,9 +13,9 @@ const SALT_ROUNDS = 10;
 
 module.exports.createUser = (req, res, next) => {
   const { email, password, name } = req.body;
-  if (!email || !password) {
-    throw new BadRequestError('Не передан email или password');
-  }
+  // if (!email || !password) {
+  //   throw new BadRequestError('Не передан email или password');
+  // }
   bcrypt
     .hash(password, SALT_ROUNDS)
     .then((hash) => User.create({
@@ -43,9 +43,9 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    throw new Unauthorized('Не передан email или password');
-  }
+  // if (!email || !password) {
+  //   throw new Unauthorized('Не передан email или password');
+  // }
   User
     .findOne({ email })
     .select('+password')
