@@ -96,6 +96,8 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError('Некорректные данные'));
+      } else if (err.code === MONGO_DUPLICATE_ERROR) {
+        next(new ConflictError('Email уже используется'));
         return;
       }
       next(err);
