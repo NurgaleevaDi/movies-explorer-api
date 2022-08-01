@@ -18,11 +18,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(helmet());
 
-app.use(limiter);
-
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/moviesdb');
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use(routes);
 
