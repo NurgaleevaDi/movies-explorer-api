@@ -32,9 +32,9 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Ошибка ввода данных'));
+        next(new BadRequestError('При регистрации пользователя произошла ошибка.'));
       } else if (err.code === MONGO_DUPLICATE_ERROR) {
-        next(new ConflictError('Email уже используется'));
+        next(new ConflictError('Пользователь с таким email уже существует.'));
         return;
       }
       next(err);
@@ -51,7 +51,7 @@ module.exports.login = (req, res, next) => {
     .select('+password')
     .then((user) => {
       if (!user) {
-        throw new Unauthorized('Не передан email или password');
+        throw new Unauthorized('Вы ввели неправильный логин или пароль');
       }
       return Promise.all([
         user,
@@ -60,7 +60,7 @@ module.exports.login = (req, res, next) => {
     })
     .then(([user, isPasswordCorrect]) => {
       if (!isPasswordCorrect) {
-        throw new Unauthorized('Не передан email или password');
+        throw new Unauthorized('Вы ввели неправильный логин или пароль');
       }
       return generateToken({ _id: user._id });
     })
@@ -97,7 +97,7 @@ module.exports.updateUser = (req, res, next) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError('Некорректные данные'));
       } else if (err.code === MONGO_DUPLICATE_ERROR) {
-        next(new ConflictError('Email уже используется'));
+        next(new ConflictError('Пользователь с таким email уже существует.'));
         return;
       }
       next(err);
